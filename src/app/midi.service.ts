@@ -3,7 +3,10 @@ import { Injectable, EventEmitter } from '@angular/core';
 @Injectable()
 export class MidiService {
 
-    midi: any = null;
+	private midi: any = null;
+	public outputs = [];
+    public inputs = [];
+
 
     onCC = new EventEmitter();
 
@@ -27,28 +30,26 @@ export class MidiService {
 
         var noteon;
         var noteoff;
-        var outputs = [];
-        var inputs = [];
 
         // Create array of all available devices
         var iter = this.midi.outputs.values();
         for (var i = iter.next(); i && !i.done; i = iter.next()) {
-            outputs.push(i.value);
+            this.outputs.push(i.value);
         }
         iter = this.midi.inputs.values();
         for (var i = iter.next(); i && !i.done; i = iter.next()) {
-            inputs.push(i.value);
+            this.inputs.push(i.value);
         }
 
         // Debug output to console.
-        for (let i = 0; i < inputs.length; i++) {
-            console.log("In (" + i + "):", inputs[i].name);
+        for (let i = 0; i < this.inputs.length; i++) {
+            console.log("In (" + i + "):", this.inputs[i].name);
         }
-        for (let i = 0; i < outputs.length; i++) {
-            console.log("Out (" + i + "):", outputs[i].name);
+        for (let i = 0; i < this.outputs.length; i++) {
+            console.log("Out (" + i + "):", this.outputs[i].name);
         }
 
-        inputs[2].onmidimessage = this.onMIDIMessage.bind(this);
+        this.inputs[2].onmidimessage = this.onMIDIMessage.bind(this);
 
         // Craft 'note on' and 'note off' messages (channel 3, note number 60 [C3], max velocity)
 //        noteon = [0x92, 60, 127];

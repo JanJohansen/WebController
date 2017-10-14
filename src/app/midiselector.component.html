@@ -1,5 +1,11 @@
 <div>
-  <select>
-    <option *ngFor="let device of inDevices" value="volvo">Volvo</option>
-  </select>
+	Midi input:
+	<select (change)="inSelected($event.target.value)">
+		<option *ngFor="let device of inDevices" value="{{device.name}}">{{device.name}}</option>
+	</select>
+	<br />
+	Midi output:
+	<select (change)="outSelected($event.target.value)">
+		<option *ngFor="let device of outDevices" value="{{device.name}}">{{device.name}}</option>
+	</select>
 </div>

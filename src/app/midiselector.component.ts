@@ -3,19 +3,26 @@ import { Component } from '@angular/core';
 import { MidiService } from './midi.service';
 
 @Component({
-  selector: 'app-midiselector',
+  selector: 'midi-selector',
   templateUrl: './midiselector.component.html',
   styleUrls: ['./midiselector.component.css'],
   providers: [MidiService]
 })
-export class AppMidiSelector {
-    inDevices: string[];
+export class MidiSelector {
+	inDevices = [];
+	outDevices = [];
 
-    constructor(private midiService: MidiService) {
-        //inDevices = midiService.
-    };
+	constructor(private midiService: MidiService) {
+		this.inDevices = midiService.inputs;
+		this.outDevices = midiService.outputs;
+    }
 
-    faderChange(e): void {
-        this.midiService.send("Hello");
-    };
+	inSelected(event) {
+		console.log("evt:", event);
+		//localStorage.midiInDeviceName = ;
+	}
+
+	outSelected(event) {
+
+	}
 }
